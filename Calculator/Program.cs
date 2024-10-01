@@ -2,53 +2,62 @@
 
 void CalculatorApp()
 {
-    // Declating intergers and initialzing as 0
-    int firstNumber = 0;
-    int secondNumber = 0;
-    int sumTotal = 0;
-    int choice = 0;
-
-    // Obtaining first interger input
-    Console.WriteLine("Type in the first number followed by the enter key.");
-    firstNumber = Convert.ToInt32(Console.ReadLine());
-
-    // Obtaining second interger input
-    Console.WriteLine("Type in the second number followed by the enter key");
-    secondNumber = Convert.ToInt32(Console.ReadLine());
-
-    //Using a loop to obtain operator for sum
-    Console.WriteLine("Please select an option from the following list:");
-    Console.WriteLine("1 - Add");
-    Console.WriteLine("2 - Subtract");
-    Console.WriteLine("3 - Divide");
-    Console.WriteLine("4 - Multiply");
-
-    //Convert choice selection into integer
-    choice = Convert.ToInt32(Console.ReadLine());
-
-    // creating the sum for two interger inputs based on operator chosen
-    if (choice == 1)
+    try
     {
-        sumTotal = firstNumber + secondNumber;
-        Console.WriteLine($"The sum of {0}+{1}={2}", firstNumber + secondNumber, sumTotal);
+
+        // Obtaining first interger input
+        Console.WriteLine("Type in the first number followed by the enter key.");
+        int firstNumber = Convert.ToInt32(Console.ReadLine());
+
+        // Obtaining second interger input
+        Console.WriteLine("Type in the second number followed by the enter key");
+        int secondNumber = Convert.ToInt32(Console.ReadLine());
+
+        // Prompt the user to enter the operation
+        Console.Write("Enter the operation (+, -, *, /): ");
+
+        // Keyboard input is by default of type 'string'
+        // and requires conversion to 'char' to work
+        // with the switch statement
+        char operation = Convert.ToChar(Console.ReadLine());
+        int result = 0;
+
+        // Perform the operation
+        switch (operation)
+        {
+
+            case '+':
+                result = firstNumber + secondNumber;
+                break;
+            case '-':
+                result = firstNumber - secondNumber;
+                break;
+            case '*':
+                result = firstNumber * secondNumber;
+                break;
+            case '/':
+                result = firstNumber / secondNumber;
+                break;
+            default:
+                Console.WriteLine("Invalid operation.");
+                return;
+        }
+        // Output the result to the user
+        Console.WriteLine($"Result: {result}");
     }
-    else if (choice == 2)
+    catch (FormatException ex)
     {
-        sumTotal = firstNumber - secondNumber;
-        Console.WriteLine($"The sum of {firstNumber}-{secondNumber}={sumTotal}", firstNumber - secondNumber, sumTotal);
+        // Handle the case where the input is not valid
+        Console.WriteLine("Please enter a valid number.");
     }
-    else if (choice == 3)
+    catch (DivideByZeroException ex)
     {
-        sumTotal = firstNumber / secondNumber;
-        Console.WriteLine($"The sum of {firstNumber}/{secondNumber}={sumTotal}", firstNumber / secondNumber, sumTotal);
+        // Handle the divide by zero error
+        Console.WriteLine($"You cannot divide by zero.");
     }
-    else if (choice == 4)
+    finally
     {
-        sumTotal = firstNumber * secondNumber;
-        Console.WriteLine($"The sum of {firstNumber}*{secondNumber}={sumTotal}", firstNumber * secondNumber, sumTotal);
-    }
-    else
-    {
-        Console.WriteLine("You did not select a valid number between 1-4");
+        // This block runs no matter what
+        Console.WriteLine("Operation completed.");
     }
 }
